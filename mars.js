@@ -32,7 +32,7 @@ var obstacle4 = {
   y: 3
 };
 
-let obstacles = [obstacle1, obstacle2, obstacle3, obstacle4];
+var obstacles = [obstacle1, obstacle2, obstacle3, obstacle4];
 
 // ======================
 // Grid 10x10
@@ -41,6 +41,7 @@ let obstacles = [obstacle1, obstacle2, obstacle3, obstacle4];
 function displayGrid() {
 
   var gridline = "";
+  var tempGridLine = "";
 
   for (var l = 0; l <= 10; l++) {
     gridline += " ___ ___ ___ ___ ___ ___ ___ ___ ___ ___";
@@ -50,17 +51,32 @@ function displayGrid() {
       gridline += " ___ ___ ___ ___ ___ ___ ___ ___ ___ ___";
     } else {
       for (var c = 0; c <= 10; c++) {
-        if (rover.x === c && rover.y === l) {
-          gridline += "| X ";
-        } else {
-          gridline += "|   ";
+        for (var i = 0; obstacles.length > i; i++) {
+          
+            if (obstacles[i].x  === c && obstacles[i].y === l) { 
+              tempGridLine = "|***";
+              
+          }
         }
-         }
+        if(tempGridLine === ""){
+          if (rover.x === c && rover.y === l) {
+            tempGridLine = "| X ";
+          } else {
+            tempGridLine = "|   ";
+          }
+        }
+
+        gridline += tempGridLine;
+        
+        tempGridLine = "";
+
+      } 
       console.log(gridline);
       gridline = "";
     }
   }
 }
+
 
 // ======================
 // Turn to the left
@@ -329,6 +345,17 @@ function commands(command) {
     }
   }
 }
+
+/*
+function validateObstaclesForWard (){
+  for (var i = 0; obstacles.length > i; i++) {
+          
+    if ((obstacles[i].x  === rover.x + 1) && (obstacles[i].y  === rover.y + 1 || obstacles[i].y  === rover.y - 1)) { 
+      
+      
+  }
+}
+*/
 
 // ====================
 // The Travel Log
