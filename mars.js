@@ -8,7 +8,6 @@ var rover = {
 };
 
 // ======================
-
 // Obstacles
 //==========================
 
@@ -34,9 +33,9 @@ var obstacle4 = {
 
 var obstacles = [obstacle1, obstacle2, obstacle3, obstacle4];
 
-// ======================
-// Grid 10x10
-// ======================
+// =========================================
+// Grid 10x10 and the obstacles in the grid
+// =========================================
 
 function displayGrid() {
 
@@ -190,6 +189,7 @@ function canRoverMoveInX() {
   switch (rover.x) {
     case 0:
       if (rover.direction === "E") {
+        
         moveForward();
       } else {
         console.log("You can go out of the grid");
@@ -245,8 +245,8 @@ function canRoverMoveInY() {
 function canRoverMoveBackInX() {
   switch (rover.x) {
     case 0:
-      if (rover.direction === "W") {
-        moveBackward();
+      if (rover.direction === "W" && validateObstaclesForXForward()) {
+        moveForward();
       } else {
         console.log("You can go out of the grid");
         console.log("Actual position x = " + rover.x + " y = " + rover.y);
@@ -346,17 +346,6 @@ function commands(command) {
   }
 }
 
-/*
-function validateObstaclesForWard (){
-  for (var i = 0; obstacles.length > i; i++) {
-          
-    if ((obstacles[i].x  === rover.x + 1) && (obstacles[i].y  === rover.y + 1 || obstacles[i].y  === rover.y - 1)) { 
-      
-      
-  }
-}
-*/
-
 // ====================
 // The Travel Log
 // ====================
@@ -372,7 +361,7 @@ function printLogs() {
 // =====================
 
 function marsRoverInit() {
-  var cmd = "b"; //prompt("Please enter the path");
+  var cmd = prompt("Please enter the path"); // cmd = "rrffl"
   displayGrid();
   commands(cmd);
   printLogs();
