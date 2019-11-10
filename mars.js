@@ -9,10 +9,37 @@ var rover = {
 
 // ======================
 
-// Grid 10x10
+// Obstacles
 //==========================
 
+var obstacle1 = {
+  x: 3,
+  y: 4
+};
+
+var obstacle2 = {
+  x: 5,
+  y: 2
+};
+
+var obstacle3 = {
+  x: 8,
+  y: 5
+};
+
+var obstacle4 = {
+  x: 7,
+  y: 3
+};
+
+let obstacles = [obstacle1, obstacle2, obstacle3, obstacle4];
+
+// ======================
+// Grid 10x10
+// ======================
+
 function displayGrid() {
+
   var gridline = "";
 
   for (var l = 0; l <= 10; l++) {
@@ -28,13 +55,16 @@ function displayGrid() {
         } else {
           gridline += "|   ";
         }
-        //console.log("Linhas: " + l + " Colunas: " + c);
-      }
+         }
       console.log(gridline);
       gridline = "";
     }
   }
 }
+
+// ======================
+// Turn to the left
+// ======================
 
 function turnLeft() {
   switch (rover.direction) {
@@ -54,6 +84,10 @@ function turnLeft() {
   console.log("turnLeft was called!");
 }
 
+// ======================
+// Turn to the right
+// ======================
+
 function turnRight() {
   switch (rover.direction) {
     case "N":
@@ -72,88 +106,205 @@ function turnRight() {
   console.log("turnRight was called!");
 }
 
+// ==========================
+// Moving the Rover forward
+// ==========================
+
 function moveForward() {
-  
-    switch (rover.direction) {
-      case "W":
-        rover.x -= 1;
-        displayGrid();
-        break;
-      case "N":
-        rover.y -= 1;
-        displayGrid();
-        break;
-      case "S":
-        rover.y += 1;
-        displayGrid();
-        break;
-      case "E":
-        rover.x += 1;
-        displayGrid();
-        break;
-    }
-    
-  
+
   console.log("moveForward was called");
+
+  switch (rover.direction) {
+    case "W":
+      rover.x -= 1;
+      displayGrid();
+      break;
+    case "N":
+      rover.y -= 1;
+      displayGrid();
+      break;
+    case "S":
+      rover.y += 1;
+      displayGrid();
+      break;
+    case "E":
+      rover.x += 1;
+      displayGrid();
+      break;
+  }
+
   rover.travelLog.push(" Position x: " + rover.x + " position y: " + rover.y);
 }
 
+// ===============================
+// Moving the Rover to backwards
+// ===============================
+
+function moveBackward() {
+
+  console.log("moveBackward was called");
+
+  switch (rover.direction) {
+    case "W":
+      rover.x += 1;
+      displayGrid();
+      break;
+    case "N":
+      rover.y += 1;
+      displayGrid();
+      break;
+    case "S":
+      rover.y -= 1;
+      displayGrid();
+      break;
+    case "E":
+      rover.x -= 1;
+      displayGrid();
+      break;
+  }
+
+rover.travelLog.push(" Position x: " + rover.x + " position y: " + rover.y);
+}
+
+// ===========================================================
+// Checking if the Rover can move forward in the x direction
+// ===========================================================
 
 function canRoverMoveInX() {
   switch (rover.x) {
     case 0:
-      if(rover.direction === "E"){
-      moveForward();
-      }else{
+      if (rover.direction === "E") {
+        moveForward();
+      } else {
         console.log("You can go out of the grid");
         console.log("Actual position x = " + rover.x + " y = " + rover.y);
       }
       break;
     case 9:
-      if(rover.direction === "W"){
+      if (rover.direction === "W") {
         moveForward();
-        }else{
-          console.log("You can go out of the grid");
-          console.log("Actual position x = " + rover.x + " y = " + rover.y);
-        }
+      } else {
+        console.log("You can go out of the grid");
+        console.log("Actual position x = " + rover.x + " y = " + rover.y);
+      }
       break;
     default:
-      moveForward();  
+      moveForward();
   }
 }
+
+// ===========================================================
+// Checking if the Rover can move forward in the y direction
+// ===========================================================
 
 function canRoverMoveInY() {
   switch (rover.y) {
     case 0:
-      if(rover.direction === "S"){
-      moveForward();
-      }else{
+      if (rover.direction === "S") {
+        moveForward();
+      } else {
         console.log("You can go out of the grid");
         console.log("Actual position x = " + rover.x + " y = " + rover.y);
       }
       break;
-      
+
     case 9:
-      if(rover.direction === "N"){
+      if (rover.direction === "N") {
         moveForward();
-        }else{
-          console.log("You can go out of the grid");
-          console.log("Actual position x = " + rover.x + " y = " + rover.y);
-        }
+      } else {
+        console.log("You can go out of the grid");
+        console.log("Actual position x = " + rover.x + " y = " + rover.y);
+      }
       break;
 
-    default: 
-      moveForward();  
+    default:
+      moveForward();
   }
 }
 
-function canRoverMove(){
-  if(rover.direction==="N"||rover.direction==="S"){
+// ============================================================
+// Checking if the Rover can move backward in the x direction
+// ============================================================
+
+function canRoverMoveBackInX() {
+  switch (rover.x) {
+    case 0:
+      if (rover.direction === "W") {
+        moveBackward();
+      } else {
+        console.log("You can go out of the grid");
+        console.log("Actual position x = " + rover.x + " y = " + rover.y);
+      }
+      break;
+    case 9:
+      if (rover.direction === "E") {
+        moveBackward();
+      } else {
+        console.log("You can go out of the grid");
+        console.log("Actual position x = " + rover.x + " y = " + rover.y);
+      }
+      break;
+    default:
+      moveBackward();
+  }
+}
+
+// ============================================================
+// Checking if the Rover can move backward in the y direction
+// ============================================================
+
+function canRoverMoveBackInY() {
+  switch (rover.y) {
+    case 0:
+      if (rover.direction === "N") {
+        moveBackward();
+      } else {
+        console.log("You can go out of the grid");
+        console.log("Actual position x = " + rover.x + " y = " + rover.y);
+      }
+      break;
+
+    case 9:
+      if (rover.direction === "S") {
+        moveBackward();
+      } else {
+        console.log("You can go out of the grid");
+        console.log("Actual position x = " + rover.x + " y = " + rover.y);
+      }
+      break;
+
+    default:
+      moveBackward();
+  }
+}
+
+// ================================================================
+// Checking if the Rover can move forward according the direction
+// ================================================================
+
+function canRoverMove() {
+  if (rover.direction === "N" || rover.direction === "S") {
     canRoverMoveInY();
-  }else{
+  } else {
     canRoverMoveInX();
   }
 }
+
+// ================================================================
+// Checking if the Rover can move backward according the direction
+// ================================================================
+
+function canRoverMoveBack() {
+  if (rover.direction === "N" || rover.direction === "S") {
+    canRoverMoveBackInY();
+  } else {
+    canRoverMoveBackInX();
+  }
+}
+
+// ============================================
+// Execution and validation of the commands
+// ============================================
 
 function commands(command) {
   for (var i = 0; i < command.length; i++) {
@@ -169,19 +320,35 @@ function commands(command) {
         turnLeft();
         canRoverMove();
         break;
+      case "b":
+        canRoverMoveBack();
+        break;
       default:
-        console.log("Please, enter a valid command, i.e. l, r or f");
+        console.log("Please, enter a valid command, i.e. l, b, r or f");
         break;
     }
   }
 }
 
+// ====================
+// The Travel Log
+// ====================
+
+function printLogs() {
+  for (var i = 0; i < rover.travelLog.length; i++) {
+    console.log(rover.travelLog[i]);
+  }
+}
+
+// =====================
+// Moving the Rover
+// =====================
 
 function marsRoverInit() {
-  var cmd = "rrf"; //prompt("Please enter the path");
+  var cmd = "b"; //prompt("Please enter the path");
   displayGrid();
   commands(cmd);
-
+  printLogs();
 }
 
 marsRoverInit();
